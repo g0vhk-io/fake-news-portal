@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>假新聞報告網站</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -8,27 +9,66 @@
   </head>
   <body>
     <div class="jumbotron">
-      <h1 class="display-4">假新聞報告網站</h1>
-      <p class="lead">一共有&nbsp;<b>{{total}}</b>&nbsp;份報告</p>
-      <hr class="my-4">
-      <p>本網站收集及驗證假新聞報導。</p>
-      <a class="btn btn-primary btn-lg" href="https://t.me/g0vhkFakeNewsReporterBot" role="button" target="_blank">使用 Telegram Bot @g0vhkFakeNewsReporterBot</a>
-    </div>
-    <div style="padding-left:10pt;padding-right:10pt;">
-      {% for report in reports %}
-      <div class="card" style="padding-left:2pt">
-        <div class="card-body">
-            <h5 class="mt-0"> 驗證狀態 : <button type="button" class="btn btn-danger">{{report.status}}</button></h5>
-          {% if report.link %}
-          <h5>{{report.link.title}}&nbsp;<a href="{{report.link.url}}" target="_blank">{{report.link.url}}</a></h5>
-            <p>{{report.link.short_text}}</p>
-          {% elif report.image %}
-            <img src="{%if report.image%}{{report.image.image}}{%else%}{{report.link.image}}{%endif%}" class="mr-3" alt="..." width="80%" />
-             {{report.image.description}}
-          {% endif %}
+      <div class="container" style="margin-left:2pt;margin-right:none">
+      <div class="row">
+        <div class="col-md-auto">
+          <b class="display-4">假新聞報告網站</b>
+          <p>一共有&nbsp;<b>{{total}}</b>&nbsp;份報告</p>
+          <p>本網站收集及驗證假新聞報導。</p>
+          <a class="btn btn-primary btn-sm" href="https://t.me/g0vhkFakeNewsReporterBot" role="button" target="_blank">使用 Telegram Bot <br/>@g0vhkFakeNewsReporterBot</a>&nbsp;
+           &nbsp;<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+            如何報告 
+            </button>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">如何舉報</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="container">
+                  <div class="row">
+                    <div class="col">將相片傳送到&nbsp;<a href="https://t.me/g0vhkFakeNewsReporterBot" target="_blank">Telegram Bot</a><br/><img src="/static/ex1.png" width="200"/>
+                      <br/>
+                      或將連結傳送到&nbsp;<a href="https://t.me/g0vhkFakeNewsReporterBot" target="_blank">Telegram Bot</a><br/><img src="/static/ex2.png" width="200"/>
+                    </div>
+                    <div class="col">
+                      報告就會上載到網站<br/>
+                      <img src="/static/ex3.png" width="200"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <br/><br/>
+      </div>
+      
+    </div>
+    <div class="container" style="padding-left:10pt;padding-right:10pt;">
+      {% for report in reports %}
+      {% if forloop.counter0|divisibleby:3 %}
+      <div class="row">
+      {% endif %}
+        <div class="col-sm-3 card" style="padding:12pt;margin-right:12pt;margin-bottom:12pt">
+             <h5 class="mt-0"> 驗證狀態 : <button type="button" class="btn btn-danger">{{report.status}}</button></h5>
+             {% if report.link %}
+             <h5>{{report.link.title}}&nbsp;<a href="{{report.link.url}}" target="_blank">{{report.link.url}}</a></h5>
+             <p>{{report.link.short_text}}</p>
+             {% elif report.image %}
+             <img src="{%if report.image%}{{report.image.image}}{%else%}{{report.link.image}}{%endif%}" class="mr-3" alt="..." width="80%" />
+             {{report.image.description}}
+             {% endif %}
+
+        </div>
+      {% if forloop.counter|divisibleby:3 %}
+      </div>
+      {% endif %}
       {% endfor %}
     </div>
   </body>
