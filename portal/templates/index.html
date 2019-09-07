@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>假新聞報告網站</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <h1 class="display-4">假新聞報告網站</h1>
+      <p class="lead">一共有&nbsp;<b>{{total}}</b>&nbsp;份報告</p>
+      <hr class="my-4">
+      <p>本網站收集及驗證假新聞報導。</p>
+      <a class="btn btn-primary btn-lg" href="https://t.me/g0vhkFakeNewsReporterBot" role="button" target="_blank">使用 Telegram Bot @g0vhkFakeNewsReporterBot</a>
+    </div>
+    <div style="padding-left:10pt;padding-right:10pt;">
+      {% for report in reports %}
+      <div class="card" style="padding-left:2pt">
+        <div class="card-body">
+            <h5 class="mt-0"> 驗證狀態 : <button type="button" class="btn btn-danger">{{report.status}}</button></h5>
+          {% if report.link %}
+          <h5>{{report.link.title}}&nbsp;<a href="{{report.link.url}}" target="_blank">{{report.link.url}}</a></h5>
+            <p>{{report.link.short_text}}</p>
+          {% elif report.image %}
+            <img src="{%if report.image%}{{report.image.image}}{%else%}{{report.link.image}}{%endif%}" class="mr-3" alt="..." width="80%" />
+             {{report.image.description}}
+          {% endif %}
+        </div>
+      </div>
+      <br/><br/>
+      {% endfor %}
+    </div>
+  </body>
+</html>
