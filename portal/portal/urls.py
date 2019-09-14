@@ -23,7 +23,10 @@ from portal import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index_view),
+    path('report/<int:report_id>/', detail_view, name='detail'),
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     url(r'^auth/', include('social_django.urls', namespace='social')),
+    url(r'^markdownx/markdownify/$', proxy_markdownify_view),
+    url(r'^markdownx/upload/$', proxy_markdown_upload_view)
 ]
