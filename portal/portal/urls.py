@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index_view),
     path('report/<int:report_id>/', detail_view, name='detail'),
+    path('report/update_comment', update_comment, name='update_comment'),
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     url(r'^auth/', include('social_django.urls', namespace='social')),
