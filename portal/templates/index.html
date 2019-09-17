@@ -6,11 +6,13 @@
       <div class="row">
         <div class="col-md-auto">
           <b class="display-4">假新聞報告網站</b>
+          &nbsp;&nbsp;
+          <div class="fb-like" data-href="https://www.facebook.com/g0vhk.io" data-width="" data-layout="box_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
           <p>一共有&nbsp;<span class="display-3">{{total}}</span>&nbsp;份報告</p>
           <p>本網站收集及驗證假新聞報導。</p>
-          <a class="btn btn-primary btn-sm" href="https://t.me/g0vhkFakeNewsReporterBot" role="button" target="_blank">使用 Telegram Bot <br/>@g0vhkFakeNewsReporterBot</a>&nbsp;
+          <a class="btn btn-primary" href="https://t.me/g0vhkFakeNewsReporterBot" role="button" target="_blank">使用 Telegram Bot <br/>@g0vhkFakeNewsReporterBot</a>&nbsp;
            &nbsp;<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
-            如何報告 
+               如何報告 <br/>&nbsp;
             </button>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -46,8 +48,8 @@
     <div class="container-fluid">
       <div class="d-flex flex-wrap" style="padding-left:10pt;padding-right:10pt;">
         {% for report in reports %}
-          <div class="border p-2" style="width:30%;padding:12pt;margin-right:12pt;margin-bottom:12pt">
-              <h3 class="mt-0">
+          <div class="border p-2" style="width:40%;padding:12pt;margin-right:12pt;margin-bottom:12pt">
+              <h4 class="mt-0">
                   <span class="badge badge-{{report.status|status_color}}">{{report.status|status_text}}</span></h3>
                <a href="/report/{{report.id}}" class="btn btn-warning btn-block">進入&nbsp;&nbsp;<i class="fas fa-arrow-right"></i></a>
                {% if report.link %}
