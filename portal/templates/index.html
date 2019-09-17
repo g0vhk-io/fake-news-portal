@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-md-auto">
           <b class="display-4">假新聞報告網站</b>
-          <p>一共有&nbsp;<b>{{total}}</b>&nbsp;份報告</p>
+          <p>一共有&nbsp;<span class="display-3">{{total}}</span>&nbsp;份報告</p>
           <p>本網站收集及驗證假新聞報導。</p>
           <a class="btn btn-primary btn-sm" href="https://t.me/g0vhkFakeNewsReporterBot" role="button" target="_blank">使用 Telegram Bot <br/>@g0vhkFakeNewsReporterBot</a>&nbsp;
            &nbsp;<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
@@ -43,25 +43,28 @@
       </div>
       
     </div>
-    <div class="d-flex flex-md-wrap" style="padding-left:10pt;padding-right:10pt;">
-      {% for report in reports %}
-        <div class="col-2 border" style="padding:12pt;margin-right:12pt;margin-bottom:12pt">
-             <h5 class="mt-0"> 驗證狀態 : <span class="badge badge-secondary">{{report.status}}</span></h5>
-             <a href="/report/{{report.id}}" class="btn btn-warning btn-block">進入&nbsp;&nbsp;<i class="fas fa-arrow-right"></i></a>
-             {% if report.link %}
-             <h5>{{report.link.title|default:"(沒有標題)" }}&nbsp;</h5><a href="{{report.link.url}}" target="_blank">連結</a>
-             <p>{{report.link.short_text}}</p>
-             {% elif report.image %}
-             <br/>
-             <img src="{%if report.image%}{{report.image.image}}{%else%}{{report.link.image}}{%endif%}" class="mr-3" alt="..." width="80%" />
-             {{report.image.description}}
-             {% elif report.text %} 
-             {{report.text.description|truncatechars:60}}
-             {% endif %}
+    <div class="container-fluid">
+      <div class="d-flex flex-wrap" style="padding-left:10pt;padding-right:10pt;">
+        {% for report in reports %}
+          <div class="border p-2" style="width:30%;padding:12pt;margin-right:12pt;margin-bottom:12pt">
+              <h3 class="mt-0">
+                  <span class="badge badge-{{report.status|status_color}}">{{report.status|status_text}}</span></h3>
+               <a href="/report/{{report.id}}" class="btn btn-warning btn-block">進入&nbsp;&nbsp;<i class="fas fa-arrow-right"></i></a>
+               {% if report.link %}
+               <h5>{{report.link.title|default:"(沒有標題)" }}&nbsp;</h5><a href="{{report.link.url}}" target="_blank">連結</a>
+               <p>{{report.link.short_text}}</p>
+               {% elif report.image %}
+               <br/>
+               <img src="{%if report.image%}{{report.image.image}}{%else%}{{report.link.image}}{%endif%}" class="mr-3" alt="..." width="80%" />
+               {{report.image.description}}
+               {% elif report.text %} 
+               {{report.text.description|truncatechars:60}}
+               {% endif %}
 
 
-        </div>
-      {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </body>
 </html>
