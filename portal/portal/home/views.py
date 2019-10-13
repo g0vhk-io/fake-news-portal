@@ -56,7 +56,8 @@ def update_comment(request):
         return HttpResponseForbidden()
     report_id = int(request.POST.get('report_id', -1)) 
     comment = request.POST.get('comment', '')
-    data = {'comment': comment, 'report_id': report_id}
+    status = request.POST.get('status', None)
+    data = {'comment': comment, 'report_id': report_id, 'status': status}
     headers = {'Authorization': 'Token %s' % API_SERVER_TOKEN}
     r = requests.post(API_HOST + '/api/report/update_comment', data=data, headers=headers)
     print(r.status_code)

@@ -2,12 +2,15 @@
 {% block content %}
 <link href="/static/markdownx/admin/css/markdownx.css" type="text/css" media="all" rel="stylesheet">
 <script type="text/javascript" src="/static/markdownx/js/markdownx.js"></script>
-<h1>狀態&nbsp;:&nbsp;{{report.status|status_text}}</h1>
+<h1>狀態&nbsp;:&nbsp;<span class="badge badge-{{report.status|status_color}}">{{report.status|status_text}}</span></h1>
 
 
 <ul class="nav nav-tabs">
   <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#home">報告內容</a></li>
+
+{% if is_editor %}
   <li class="nav-item active"><a class="nav-link" data-toggle="tab" href="#menu1">審核</a></li>
+{% endif %}
 </ul>
 
 
@@ -27,18 +30,17 @@
   <li class="list-group-item">網址: <a href="{{report.link.url}}" target="_blank">{{report.link.url}}</a></li>
   <li class="list-group-item">標題: {{report.link.title|default:"(空)"}}</li>
   <li class="list-group-item">文字: {{report.link.short_text|default:"(空)"}}</li>
-  <li class="list-group-item">圖片: {% if report.link.image %}<img src="{{report.link.image}}"/>{% else %}(空){%endif%}</li>
+  <li class="list-group-item">圖片: {% if report.link.image %}<img src="{{report.link.image}}" style="max-width:100%"/>{% else %}(空){%endif%}</li>
 </ul>
 {%endif%}
 
 {%if report.image%}
-圖片 :<br/>
-<img src="{{report.image.image}}" />
+<img src="{{report.image.image}}"  style="max-width:100%"/>
 {%endif%}
 
 {% if markdownx_md|length > 0 %}
 <hr/>
-<h3>審核結果 :</h3>
+<h3 class="font-weight-bold">審核結果 : <span class="badge badge-{{report.status|status_color}}">{{report.status|status_text}}</span></h3>
 {{markdownx_md|safe}}
 {% endif %}
 <hr/>
@@ -70,12 +72,20 @@
 
 {% if is_editor %}
 <form action="/report/update_comment" method="post">
-<input name="report_id" type="hidden" value="{{report.id}}"  />
-編輯器 (提示: 把相關圖片拖放到輸入框內)<br/>:  
-{{markdownx_editor}}
-
-<br/>
-<input type="submit" />
+  <input name="report_id" type="hidden" value="{{report.id}}"  />
+  編輯器 (提示: 把相關圖片拖放到輸入框內，<a href="https://markdown.tw" target="_blank">Markdown Syntax)</a> : <br/>  
+  <div class="editor">
+    {{markdownx_editor}}
+  </div>
+  <br/>
+  <select name="status">
+    <option value="pending" {% if report.status == "pending" %}selected="selected"{% endif %}>等待處理</option>
+    <option value="processing" {% if report.status == "processing" %}selected="selected"{% endif %}>處理中</option>
+    <option value="factchecked" {% if report.status == "factchecked" %}selected="selected"{% endif %}>正確</option>
+    <option value="partially_wrong"  {% if report.status == "partially_wrong" %}selected="selected"{% endif %}>含部份錯誤信息</option>
+    <option value="wrong"  {% if report.status == "wrong" %}selected="selected"{% endif %}>假新聞</option>
+  </select>
+  <input type="submit" value="更新"/>
 </form>
 {% else %}
 {{markdownx_md|safe}}
@@ -83,4 +93,12 @@
 </div>
 </div>
 {% endblock %}
-
+{% block css %}
+<style>
+ .editor .markdownx-preview {
+   border: 1px solid black;
+   margin-top:1em;
+   min-height: 100px;
+ }
+</style>
+{% endblock%}
