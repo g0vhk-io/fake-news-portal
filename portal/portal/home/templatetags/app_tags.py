@@ -8,7 +8,7 @@ def get_status_chinese(status):
     mapping = {'pending': '等待處理', 
                'processing': '處理中',
                'factchecked':'正確',
-               'partially_wrong': '含錯誤信息',
+               'partially_wrong': '含部份錯誤信息',
                'wrong': '假新聞'}
     return mapping.get(status, '不明')
 

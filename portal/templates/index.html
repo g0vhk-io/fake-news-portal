@@ -1,19 +1,21 @@
 {% extends 'layout.html' %}
 {% block content %}
 <body>
-    <div class="jumbotron">
-      <div class="container" style="margin-left:2pt;margin-right:none">
-      <div class="row">
-        <div class="col-md-auto">
+    <div class="text-white" style="margin-bottom:1em;background-color:#565656;background-image:url('/static/background.png');background-repeat: no-repeat;background-position: right bottom">
+      <div style="margin-left:2pt;margin-right:none;background-color:rgba(64, 64, 64, 0.7)">
+      <div>
+        <div  style="padding:1em">
           <b class="display-4">假新聞報告網站</b>
           &nbsp;&nbsp;
           <div class="fb-like" data-href="https://www.facebook.com/g0vhk.io" data-width="" data-layout="box_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
-          <p>一共有&nbsp;<span class="display-3">{{total}}</span>&nbsp;份報告</p>
+          <p>一共有&nbsp;<span class="display-3 text-danger font-weight-bold">{{total}}</span>&nbsp;份報告</p>
           <p>本網站收集及驗證假新聞報導。</p>
-          <a class="btn btn-primary" href="https://t.me/g0vhkFakeNewsReporterBot" role="button" target="_blank">使用 Telegram Bot <br/>@g0vhkFakeNewsReporterBot</a>&nbsp;
-           &nbsp;<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
-               如何報告 <br/>&nbsp;
+          <div class="d-flex">
+          <a class="btn btn-primary" style="margin-top:1em" href="https://t.me/g0vhkFakeNewsReporterBot" role="button" target="_blank">使用 Telegram Bot <br/>@g0vhkFakeNewsReporterBot</a>&nbsp;
+           &nbsp;<button type="button" style="margin-top:1em;h-100" class="align-middle btn btn-info" data-toggle="modal" data-target="#exampleModal">
+               如何報告
             </button>
+          </div>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -51,7 +53,7 @@
           <div class="border p-2" style="width:40%;padding:12pt;margin-right:12pt;margin-bottom:12pt">
               <h4 class="mt-0">
                   <span class="badge badge-{{report.status|status_color}}">{{report.status|status_text}}</span></h3>
-               <a href="/report/{{report.id}}" class="btn btn-warning btn-block">進入&nbsp;&nbsp;<i class="fas fa-arrow-right"></i></a>
+               <a href="/report/{{report.id}}" class="btn btn-warning btn-block">查看&nbsp;&nbsp;<i class="fas fa-arrow-right"></i></a>
                {% if report.link %}
                <h5>{{report.link.title|default:"(沒有標題)" }}&nbsp;</h5><a href="{{report.link.url}}" target="_blank">連結</a>
                <p>{{report.link.short_text}}</p>
